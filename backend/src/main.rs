@@ -1,23 +1,30 @@
-use actix_web::{web, App, HttpResponse, HttpServer, Responder};
+use actix_web::{web, App, HttpResponse, HttpServer, Responder, http};
 use listenfd::ListenFd;
 use actix_files::Files;
+use actix_cors::Cors;
 
 mod controllers;
+
+//     "export": "next export -o ../backend/src/views"
 
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {
     let mut listenfd = ListenFd::from_env();
     let mut server = HttpServer::new(|| {
         App::new()
+            .wrap(
+                Cors::new() // <- Construct CORS middleware builder
+                .allowed_methods(vec!["GET", "POST"])
+                .allowed_header(http::header::ACCESS_CONTROL_ALLOW_ORIGIN)
+                .allowed_header(http::header::ACCESS_CONTROL_ALLOW_HEADERS)
+                .finish()
+            )
             .route("/api/response", web::get().to(controllers::main::response))
             .route("/again", web::get().to(controllers::main::index2))
-            .service(Files::new("/", "./frontend/build/").index_file("index.html"))
-            //.service(Files::new("/meh", "./frontend/build/").index_file("index.html"))
-            /*.service(web::scope("/meh").default_service(
-                Files::new("/", "./frontend/build/")
-                    .index_file("index.html")
-                    .use_last_modified(true),
-            ),)*/
+            .route("/about", web::get().to(controllers::main::about))
+            .route("/shop", web::get().to(controllers::main::index))
+            .route("/", web::get().to(controllers::main::index))
+            .service(Files::new("/", "./src/views").show_files_listing()) // needs this to find FE files
     });
 
     server = if let Some(l) = listenfd.take_tcp_listener(0).unwrap() {

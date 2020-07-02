@@ -1,6 +1,5 @@
 use actix_web::{web, App, HttpResponse, HttpServer, HttpRequest, Responder, Result};
 use actix_files::NamedFile;
-use std::path::PathBuf;
 use serde::{Deserialize, Serialize};
 
 /*pub async fn index() -> impl Responder {
@@ -12,9 +11,13 @@ struct MyObj {
     name: String,
 }
 
-pub async fn index(req: HttpRequest) -> Result<NamedFile> {
-    let path: PathBuf = req.match_info().query("index.html").parse().unwrap();
-    Ok(NamedFile::open(path)?)
+pub async fn index() -> Result<NamedFile> {
+    Ok(NamedFile::open("./src/views/index.html")?)
+}
+
+/** Serving the frontend */
+pub async fn about() -> Result<NamedFile> {
+    Ok(NamedFile::open("./src/web/about.html")?)
 }
 
 pub async fn index2() -> impl Responder {
