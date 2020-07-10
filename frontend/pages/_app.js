@@ -1,13 +1,8 @@
-import { Provider } from 'next-auth/client'
-import '../styles.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-const App = ({ Component, pageProps }) => {
-  const { session } = pageProps
-  return (
-    <Provider options={{ site: process.env.SITE }} session={session}>
-      <Component {...pageProps} />
-    </Provider>
-  )
+// This default export is required in a new `pages/_app.js` file.
+function MyApp({ Component, pageProps }) {
+    return <Component {...pageProps} />;
 }
-
-export default App
+   
+export default MyApp;
