@@ -22,6 +22,11 @@ async fn main() -> std::io::Result<()> {
             .route("/api/response", web::get().to(controllers::main::response))
             .route("/again", web::get().to(controllers::main::index2))
             .route("/about", web::get().to(controllers::main::about))
+            .route("/signin", web::get().to(controllers::main::get_signin))
+            .route("/api/signin", web::post().to(controllers::main::post_signin))
+            .route("/api/signin", web::get().to(controllers::main::post_signin))
+            .route("/signup", web::get().to(controllers::main::get_signup))
+            .route("/api/signup", web::post().to(controllers::main::post_signup))
             .route("/shop", web::get().to(controllers::main::index))
             .route("/", web::get().to(controllers::main::index))
             .service(Files::new("/", "./src/views").show_files_listing()) // needs this to find FE files

@@ -1,25 +1,29 @@
-import Link from 'next/link'
 import Layout from '../components/Layout'
 
 const SignUpPage = () => (
-  <Layout title="Sign Up | Next.js + TypeScript Example">
+  <Layout title="Sign Up | Rust starter">
     <div id="signup">
-        <form>
+        <form action="/api/signup" method="post">
             <h3>Sign Up</h3>
 
             <div className="form-group">
                 <label>Username</label>
-                <input type="text" className="form-control" placeholder="Username" />
+                <input type="text" name="username" className="form-control" placeholder="Username" />
             </div>
 
             <div className="form-group">
                 <label>Email address</label>
-                <input type="email" className="form-control" placeholder="Enter email" />
+                <input type="email" name="email" className="form-control" placeholder="Enter email" />
             </div>
 
             <div className="form-group">
                 <label>Password</label>
-                <input type="password" className="form-control" placeholder="Enter password" />
+                <input type="password" name="password" className="form-control" placeholder="Enter password" />
+            </div>
+
+            <div className="form-group">
+                <label>Password</label>
+                <input type="password" name="confirm_password" className="form-control" placeholder="Confirm password" />
             </div>
 
             <button type="submit" className="btn btn-primary btn-block">Sign Up</button>

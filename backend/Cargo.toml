@@ -11,5 +11,6 @@ actix-web = "2.0.0"
 actix-rt = "1.1.1"
 listenfd = "0.3.3"
 actix-files = "0.2.2"
-serde = "1.0.114"
+serde = {version = "1.0.114", features = ["derive"] }
 actix-cors = "0.2.0"
+jsonwebtoken = "7.2.0"
